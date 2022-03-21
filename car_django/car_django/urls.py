@@ -23,5 +23,5 @@ from car_django.views import*
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('inicio/', inicio),
-    path('resultado/', resultado),
+    # path('resultado/', resultado),
 ]
