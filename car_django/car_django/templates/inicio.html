@@ -22,21 +22,31 @@
 
       <form action="" method="POST">
         {% csrf_token %}
-        <!--  fuelTypeId	id	km	makeId	modelId	provinceId	transmissionTypeId	year	cubicCapacity	doors	hp -->
+        <!--  fuelTypeId	km	makeId	modelId	transmissionTypeId	year	cubicCapacity	doors	hp -->
 
         <div class="form-group">
           <label for="exampleFormControlSelect1">fuelType</label>
           <select class="form-control" id="exampleFormControlSelect1" name="fuelTypeId">
-            <option value="1" selected="selected">Gasolina</option>
-            <option value="2">Diesel</option>
+            <option value="1" selected="selected">Diesel</option>
+            <option value="2">Gasolina</option>
             <option value="3">Electrico</option>
+            <option value="4">Hibrido</option>
+            <option value="5">Hibrido enchufable</option>
+            <option value="6">Gas licuado (GLP)</option>
+            <option value="7">Gas natural (CNG)</option>
           </select>
         </div>
-
 
         <div class="form-group">
           <label for="km">Km:</label>
           <input type="text" class="form-control" id="km" name="km" aria-describedby="km" placeholder="Enter Km">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Make</label>
+          <select class="form-control" id="exampleFormControlSelect1" name="makeId">
+            
+          </select>
         </div>
 
         <input type="submit" value="OK">
@@ -51,8 +61,6 @@
     <p>{{model}}</p>
     <h5>Precio predict:</h5>
     <p>{{ predict }}</p>
-
-
     {% endif %}
 
 
@@ -67,6 +75,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
     integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
     crossorigin="anonymous"></script>
+
+
+    <!-- este script es para rellenar el select de las marcas, con su id en el value -->
+    <script>
+
+    </script>
+
 </body>
 
 </html>

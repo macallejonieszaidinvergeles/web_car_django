@@ -9,6 +9,7 @@ from joblib import load
 from django.core.files import File
 import os
 import numpy as np
+
 # import pandas as pd
 
 
@@ -16,21 +17,23 @@ def inicio(request):
 
     # cargo el archivo con el modelo para entrenar los datos,y descargar la ultima version
     linear_regression = open(
-        os.path.dirname(os.path.realpath(__file__)) + "/model_linear_regression.pkl", "rb"
+        os.path.dirname(os.path.realpath(__file__)) + "/model_linear_regression.pkl",
+        "rb",
     )
-
 
     model_linear_regression = load(linear_regression)
 
     if request.POST:
-        # fuelTypeId	km	makeId	modelId	price	provinceId	transmissionTypeId	year	cubicCapacity	doors	hp
-        data_usuario = np.array(
-            [[]]
-        )
+        # fuelTypeId	km	makeId	modelId	transmissionTypeId	year	cubicCapacity	doors	hp
+        data_usuario = np.array([[2, 41080, 46, 322.0, 2.0, 2015, 1329.0, 5.0, 99.0]])
 
         predict = model_linear_regression.predict(data_usuario)
 
-        return render(request, "resultado.html", {"predict": predict, "model": model_linear_regression})
+        return render(
+            request,
+            "resultado.html",
+            {"predict": predict, "model": model_linear_regression},
+        )
 
     return render(request, "inicio.html")
 
@@ -38,6 +41,6 @@ def inicio(request):
 def resultado(request):
     print(request.POST)
     if request.POST:
-        data = {"dct":request.POST}
+        data = {"dct": request.POST}
         print(f"DATA:{data}")
-        return render(request,'resultado.html')
+        return render(request, "resultado.html")
