@@ -43,9 +43,9 @@
         </div>
 
         <div class="form-group">
-          <label for="exampleFormControlSelect1">Make</label>
-          <select class="form-control" id="exampleFormControlSelect1" name="makeId">
-            
+          <label for="select_marcas_id">Make</label>
+          <select class="form-control" id="select_marcas_id" name="makeId">
+
           </select>
         </div>
 
@@ -77,10 +77,23 @@
     crossorigin="anonymous"></script>
 
 
-    <!-- este script es para rellenar el select de las marcas, con su id en el value -->
-    <script>
+  <!-- este script es para rellenar el select de las marcas, con su id en el value -->
+  <script>
+    const newOptions = [{ id: 1, nombre: 'option1' }, { id: 2, nombre: 'option2' }, { id: 3, nombre: 'option2' }];
 
-    </script>
+    function llenarSelect(list) {
+      const select = document.getElementById('mySelect');
+
+      list.forEach(e => {
+        const option = document.createElement('option');
+        option.text = e.nombre;
+        option.value = e.id;
+        select.appendChild(option);
+      })
+    }
+
+    llenarSelect(newOptions);
+  </script>
 
 </body>
 
