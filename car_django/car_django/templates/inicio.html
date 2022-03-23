@@ -22,18 +22,40 @@
 
       <form action="" method="POST">
         {% csrf_token %}
+        <!--  fuelTypeId	id	km	makeId	modelId	provinceId	transmissionTypeId	year	cubicCapacity	doors	hp -->
 
-        <label for="km">Km: </label>
-        <input id="km" type="text" name="km">
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">fuelType</label>
+          <select class="form-control" id="exampleFormControlSelect1" name="fuelTypeId">
+            <option value="1" selected="selected">Gasolina</option>
+            <option value="2">Diesel</option>
+            <option value="3">Electrico</option>
+          </select>
+        </div>
+
+
+        <div class="form-group">
+          <label for="km">Km:</label>
+          <input type="text" class="form-control" id="km" name="km" aria-describedby="km" placeholder="Enter Km">
+        </div>
 
         <input type="submit" value="OK">
 
       </form>
 
     </div>
-    {% for key, value in dct.items %}
-      {{ key }}: {{ value }}
-    {% endfor %}
+    <br>
+    {% if predict%}
+    <h1>Prediction</h1>
+    <h5>Model:</h5>
+    <p>{{model}}</p>
+    <h5>Precio predict:</h5>
+    <p>{{ predict }}</p>
+
+
+    {% endif %}
+
+
 
   </div>
 
