@@ -60,7 +60,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # 'DIRS': [DIR],
         # 'DIRS': ['C:/Users/Usuario/web_car_django/car_django/car_django/templates'], #casa
-        'DIRS': ['C:/Users/Usuario-tarde/web_car_django/car_django/car_django/templates'], #colegio
+        # 'DIRS': ['C:/Users/Usuario-tarde/web_car_django/car_django/car_django/templates'], #colegio
+        'DIRS': [os.path.dirname(os.path.realpath(__file__)) +'/templates'],
+        
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
