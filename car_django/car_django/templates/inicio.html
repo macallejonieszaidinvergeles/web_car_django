@@ -20,6 +20,8 @@
     <h1>Registro datos coche</h1>
     <div class="row">
 
+      <div style="display: none" id="jsonData" data-json="{{ marcas_id|safe }}"></div>
+
       <form action="" method="POST">
         {% csrf_token %}
         <!--  fuelTypeId	km	makeId	modelId	transmissionTypeId	year	cubicCapacity	doors	hp -->
@@ -65,6 +67,7 @@
 
 
 
+
   </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -79,20 +82,43 @@
 
   <!-- este script es para rellenar el select de las marcas, con su id en el value -->
   <script>
-    const newOptions = [{ id: 1, nombre: 'option1' }, { id: 2, nombre: 'option2' }, { id: 3, nombre: 'option2' }];
 
-    function llenarSelect(list) {
-      const select = document.getElementById('mySelect');
+    window.onload = function () {
 
-      list.forEach(e => {
-        const option = document.createElement('option');
-        option.text = e.nombre;
-        option.value = e.id;
-        select.appendChild(option);
-      })
-    }
+      var myDjangoList = (("{{todo_info}}").replace(/&(l|g|quo)t;/g, function (a, b) {
+        return {
+          l: '<',
+          g: '>',
+          quo: '"'
+        }[b];
+      }));
 
-    llenarSelect(newOptions);
+      myDjangoList = myDjangoList.replace(/u'/g, '\'')
+      myDjangoList = myDjangoList.replace(/'/g, '\"')
+      // alert(myDjangoList)
+
+
+      var marca = "BMW"
+      // console.log(myDjangoList)
+
+      const myObj = JSON.parse(myDjangoList);
+
+      let modelos = [];
+      for (let i = 0; i < myObj.length; i++) {
+        if (marca == myObj[i]["make"]) {
+          modelos.push(myObj[i]["model"]);
+        }
+      }
+      modelos = new Set(modelos)
+      console.log(modelos)
+
+
+
+
+    };
+
+
+
   </script>
 
 </body>
