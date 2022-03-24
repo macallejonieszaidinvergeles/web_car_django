@@ -22,13 +22,19 @@ def inicio(request):
 
     # cargo el archivo con el modelo para entrenar los datos,y descargar la ultima version
     linear_regression = open(
-        os.path.dirname(os.path.realpath(__file__)) + "/model_linear_regression.pkl",
+        os.path.dirname(os.path.realpath(__file__)) +
+        "/model_linear_regression.pkl",
         "rb",
     )
     model_linear_regression = load(linear_regression)
 
     marcas_id = open(
-        os.path.dirname(os.path.realpath(__file__)) + "/toda_info.json",
+        os.path.dirname(os.path.realpath(__file__)) + "/marcas_id.json",
+        "rb",
+    )
+
+    marca_model_id = open(
+        os.path.dirname(os.path.realpath(__file__)) + "/marca_model_id.json",
         "rb",
     )
 
@@ -36,11 +42,18 @@ def inicio(request):
         data = json.load(file)
         data_json = json.dumps(data)
 
+    with marca_model_id as file2:
+        data2 = json.load(file2)
+        data_json2 = json.dumps(data2)
+
     if request.POST:
         # fuelTypeId	km	makeId	modelId	transmissionTypeId	year	cubicCapacity	doors	hp
         fuelTypeId = request.POST['fuelTypeId']
+        km = request.POST['km']
+        makeId = request.POST['makeId']
 
-        data_usuario = np.array([[fuelTypeId, 41080, 46, 322.0, 2.0, 2015, 1329.0, 5.0, 99.0]])
+        data_usuario = np.array(
+            [[fuelTypeId, km, makeId, 322.0, 2.0, 2015, 1329.0, 5.0, 99.0]])
 
         predict = model_linear_regression.predict(data_usuario)
 
@@ -50,13 +63,8 @@ def inicio(request):
             {"predict": predict, "model": model_linear_regression},
         )
 
-    print("data json",data)
-    return render(request, "inicio.html",{"todo_info":data_json})
-
-
-
-
-
+    # print("data json",data)
+    return render(request, "inicio.html", {"marcas_id": data_json, "marca_model_id": data_json2})
 
 
 def resultado(request):
