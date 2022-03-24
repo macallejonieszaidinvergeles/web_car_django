@@ -20,7 +20,7 @@
     <h1>Registro datos coche</h1>
     <div class="row">
 
-      <div style="display: none" id="jsonData" data-json="{{ marcas_id|safe }}"></div>
+      <!-- <div style="display: none" id="jsonData" data-json="{{ marcas_id|safe }}"></div> -->
 
       <form action="" method="POST">
         {% csrf_token %}
@@ -59,7 +59,7 @@
           </select>
         </div>
 
-        <input type="submit" value="OK">
+        <input type="submit" class="btn btn-primary" value="Valorar">
 
       </form>
 
@@ -157,12 +157,7 @@
         }
       });
 
-
-
-
     };
-
-
 
   </script>
 
