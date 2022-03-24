@@ -44,10 +44,18 @@
           <input type="text" class="form-control" id="km" name="km" aria-describedby="km" placeholder="Enter Km">
         </div>
 
+        <!-- select de las marcas -->
         <div class="form-group">
           <label for="select_marcas_id">Make</label>
           <select class="form-control" id="select_marcas_id" name="makeId">
+          </select>
+        </div>
 
+
+        <!-- select de los modelos -->
+        <div class="form-group">
+          <label for="select_model_id">model</label>
+          <select class="form-control" id="select_model_id" name="modelId">
           </select>
         </div>
 
@@ -82,10 +90,9 @@
 
   <!-- este script es para rellenar el select de las marcas, con su id en el value -->
   <script>
-
     window.onload = function () {
 
-      var myDjangoList = (("{{todo_info}}").replace(/&(l|g|quo)t;/g, function (a, b) {
+      var myDjangoList = (("{{marcas_id}}").replace(/&(l|g|quo)t;/g, function (a, b) {
         return {
           l: '<',
           g: '>',
@@ -95,22 +102,55 @@
 
       myDjangoList = myDjangoList.replace(/u'/g, '\'')
       myDjangoList = myDjangoList.replace(/'/g, '\"')
-      // alert(myDjangoList)
-
-
-      var marca = "BMW"
-      // console.log(myDjangoList)
 
       const myObj = JSON.parse(myDjangoList);
 
-      let modelos = [];
+      const select = document.getElementById('select_marcas_id');
+
       for (let i = 0; i < myObj.length; i++) {
-        if (marca == myObj[i]["make"]) {
-          modelos.push(myObj[i]["model"]);
-        }
+
+        const option = document.createElement('option');
+        option.text = myObj[i]["make"];
+        option.value = myObj[i]["makeId"];
+        select.appendChild(option);
       }
-      modelos = new Set(modelos)
-      console.log(modelos)
+
+
+      // para los modelos
+
+      var myDjangoList2 = (("{{marca_model_id}}").replace(/&(l|g|quo)t;/g, function (a, b) {
+        return {
+          l: '<',
+          g: '>',
+          quo: '"'
+        }[b];
+      }));
+
+      const select2 = document.getElementById('select_model_id');
+
+
+      myDjangoList2 = myDjangoList2.replace(/u'/g, '\'')
+      myDjangoList2 = myDjangoList2.replace(/'/g, '\"')
+
+      const myObj2 = JSON.parse(myDjangoList2);
+      console.log("myObj2",myObj2)
+
+      select.addEventListener("change", function () {
+        var marca = select.options[select.selectedIndex].text;
+        // alert(marca)
+        for (let i = 0; i < myObj2.length; i++) {
+          console.log("seleccionado",myObj2[i]["make"],myObj2[i]["model"])
+          const option = document.createElement('option');
+          if (marca.toString() == myObj2[i]["make"].toString()) {
+            option.text = myObj2[i]["model"];
+            option.value = myObj2[i]["modelId"];
+            select2.appendChild(option);
+          }
+
+        }
+      });
+
+
 
 
 
@@ -120,6 +160,8 @@
 
 
   </script>
+
+
 
 </body>
 
