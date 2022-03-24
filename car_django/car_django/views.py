@@ -51,9 +51,10 @@ def inicio(request):
         fuelTypeId = request.POST['fuelTypeId']
         km = request.POST['km']
         makeId = request.POST['makeId']
+        modelId = request.POST['modelId']
 
         data_usuario = np.array(
-            [[fuelTypeId, km, makeId, 322.0, 2.0, 2015, 1329.0, 5.0, 99.0]])
+            [[fuelTypeId, km, makeId, modelId, 2.0, 2015, 1329.0, 5.0, 99.0]])
 
         predict = model_linear_regression.predict(data_usuario)
 
