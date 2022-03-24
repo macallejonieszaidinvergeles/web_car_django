@@ -133,13 +133,20 @@
       myDjangoList2 = myDjangoList2.replace(/'/g, '\"')
 
       const myObj2 = JSON.parse(myDjangoList2);
-      console.log("myObj2",myObj2)
+      console.log("myObj2", myObj2)
 
       select.addEventListener("change", function () {
+
+        // para limpiar el select2 y renovar las opciones a la actual
+        for (let i = select2.options.length; i >= 0; i--) {
+          select2.remove(i);
+        }
+
+
         var marca = select.options[select.selectedIndex].text;
         // alert(marca)
         for (let i = 0; i < myObj2.length; i++) {
-          console.log("seleccionado",myObj2[i]["make"],myObj2[i]["model"])
+          console.log("seleccionado", myObj2[i]["make"], myObj2[i]["model"])
           const option = document.createElement('option');
           if (marca.toString() == myObj2[i]["make"].toString()) {
             option.text = myObj2[i]["model"];
@@ -149,8 +156,6 @@
 
         }
       });
-
-
 
 
 
