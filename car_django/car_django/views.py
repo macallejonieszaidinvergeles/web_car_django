@@ -24,7 +24,7 @@ def inicio(request):
     # ----------------------------------linear regresor-------------------------------------------------------
     linear_regression = open(
         os.path.dirname(os.path.realpath(__file__)) +
-        "/model_linear_regression.pkl",
+        "/modelos/model_linear_regression.pkl",
         "rb",
     )
     model_linear_regression = load(linear_regression)
@@ -33,7 +33,7 @@ def inicio(request):
     # ----------------------------------knn regresor-------------------------------------------------------
     knn_regressor = open(
         os.path.dirname(os.path.realpath(__file__)) +
-        "/model_knn_regressor.pkl",
+        "/modelos/model_knn_regressor.pkl",
         "rb",
     )
     model_knn_regressor = load(knn_regressor)
@@ -42,19 +42,19 @@ def inicio(request):
         # ----------------------------------random forest regresor-------------------------------------------------------
     random_forest_regressor = open(
         os.path.dirname(os.path.realpath(__file__)) +
-        "/model_random_forest_regressor.pkl",
+        "/modelos/model_random_forest_regressor.pkl",
         "rb",
     )
     model_random_forest_regressor = load(random_forest_regressor)
     # ----------------------------------random forest regresor-------------------------------------------------------
 
     marcas_id = open(
-        os.path.dirname(os.path.realpath(__file__)) + "/marcas_id.json",
+        os.path.dirname(os.path.realpath(__file__)) + "/json/marcas_id.json",
         "rb",
     )
 
     marca_model_id = open(
-        os.path.dirname(os.path.realpath(__file__)) + "/marca_model_id.json",
+        os.path.dirname(os.path.realpath(__file__)) + "/json/marca_model_id.json",
         "rb",
     )
 
