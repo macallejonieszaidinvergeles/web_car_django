@@ -89,11 +89,14 @@ def inicio(request):
             predict = float(predict)
             predicts.append(predict)
 
+        res = dict(zip(modelos_training, predicts))
+
+        print("diccttt:", res)
         # print("post:", request.POST)
         return render(
             request,
             "resultado.html",
-            {"predicts": predicts, "models": modelos_training},
+            {"predicts": predicts, "models": modelos_training,"res":res},
         )
 
     # print("data json",data)

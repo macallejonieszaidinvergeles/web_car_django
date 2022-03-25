@@ -16,34 +16,35 @@
 
 <body>
   <div class="container mt-5">
-    <h1>Resultados</h1>
+    <h1 class="text-center">Resultados</h1>
     <div class="row">
 
-      {% if models %}
-      {% for model in models %}
-      <div class="col-6 mt-5">
-        <h5>Model:</h5>
-        <p>{{model}}</p>
-      </div>
-      {% endfor %}
-      {% endif %}
+      <table class="table table-striped mt-5">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, value in res.items %}
+          <tr>
+            <td scope="row">{{key}}</td>
+            {% if value > 0 %}
+            {% load humanize %}
+            <td>{{value|floatformat:0|intcomma}} €</td>
+            {% else %}
+            <td>Valor no disponible</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-
-      {% if predicts %}
-      {% for predict in predicts %}
-      <div class="col-6 mt-5">
-        <h5>Precio predict:</h5>
-        {% if predict > 0 %}
-        {% load humanize %}
-        <p>{{ predict|floatformat:0|intcomma}} €</p>
-        {% else %}
-        <p>Valor no disponible</p>
-        {% endif %}
-      </div>
-      {% endfor %}
-      {% endif %}
 
     </div>
+
+    
   </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
