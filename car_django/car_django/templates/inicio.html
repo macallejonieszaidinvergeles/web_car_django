@@ -17,7 +17,7 @@
 
 <body>
   <div class="container mt-5">
-    <h1>Registro datos coche</h1>
+    <h1 class="text-center">Registro datos coche</h1>
     <div class="row">
 
       <!-- <div style="display: none" id="jsonData" data-json="{{ marcas_id|safe }}"></div> -->
@@ -26,40 +26,92 @@
         {% csrf_token %}
         <!--  fuelTypeId	km	makeId	modelId	transmissionTypeId	year	cubicCapacity	doors	hp -->
 
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">fuelType</label>
-          <select class="form-control" id="exampleFormControlSelect1" name="fuelTypeId">
-            <option value="1" selected="selected">Diesel</option>
-            <option value="2">Gasolina</option>
-            <option value="3">Electrico</option>
-            <option value="4">Hibrido</option>
-            <option value="5">Hibrido enchufable</option>
-            <option value="6">Gas licuado (GLP)</option>
-            <option value="7">Gas natural (CNG)</option>
-          </select>
+        <div class="form-group row">
+
+          <div class="col-sm-4 mt-5">
+            <label for="exampleFormControlSelect1">fuelType</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="fuelTypeId" required>
+              <option value="1" selected="selected">Diesel</option>
+              <option value="2">Gasolina</option>
+              <option value="3">Electrico</option>
+              <option value="4">Hibrido</option>
+              <option value="5">Hibrido enchufable</option>
+              <option value="6">Gas licuado (GLP)</option>
+              <option value="7">Gas natural (CNG)</option>
+            </select>
+          </div>
+
+          <!-- select de las marcas -->
+          <div class="col-sm-4 mt-5">
+            <label for="select_marcas_id">Make</label>
+            <select class="form-control" id="select_marcas_id" name="makeId" required>
+            </select>
+          </div>
+
+
+          <!-- select de los modelos -->
+          <div class="col-4 mt-5">
+            <label for="select_model_id">model</label>
+            <select class="form-control" id="select_model_id" name="modelId" required>
+            </select>
+          </div>
+
+          <div class="col-sm-4 mt-5">
+            <label for="km">Km:</label>
+            <input type="text" class="form-control" id="km" name="km" aria-describedby="km" placeholder="Enter Km"
+              required>
+          </div>
+
+          <div class="col-sm-4 mt-5">
+            <label for="select_tranmision">Transmission Type</label>
+            <select class="form-control" id="select_tranmision" name="transmissionTypeId" required>
+              <option value="2" selected="selected">Manual</option>
+              <option value="1">Automatico</option>
+            </select>
+          </div>
+
+          <div class="col-sm-4 mt-5">
+            <label for="year">Year:</label>
+            <input type="number" class="form-control" id="year" name="year" aria-describedby="year"
+              placeholder="Enter Year" required>
+          </div>
+
+
+
+          <div class="col-sm-4 mt-5">
+            <label for="cubicCapacity">cubicCapacity:</label>
+            <input type="text" class="form-control" id="cubicCapacity" name="cubicCapacity"
+              aria-describedby="cubicCapacity" placeholder="Enter cubicCapacity" required>
+          </div>
+
+
+          <div class="col-sm-4 mt-5">
+            <label for="select_doors">doors</label>
+            <select class="form-control" id="select_doors" name="doors" required>
+              <option value="3" selected="selected">3</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
+
+          <div class="col-sm-4 mt-5">
+            <label for="cubicCapacity">hp:</label>
+            <input type="text" class="form-control" id="hp" name="hp" aria-describedby="hp" placeholder="Enter hp"
+              required>
+          </div>
+
         </div>
 
-        <div class="form-group">
-          <label for="km">Km:</label>
-          <input type="text" class="form-control" id="km" name="km" aria-describedby="km" placeholder="Enter Km">
-        </div>
+        <div class="row">
+          <div class="col-10"></div>
+          <div class="col-2">
+            <input type="submit" class="btn btn-primary mt-5" value="Valorar">
+          </div>
 
-        <!-- select de las marcas -->
-        <div class="form-group">
-          <label for="select_marcas_id">Make</label>
-          <select class="form-control" id="select_marcas_id" name="makeId">
-          </select>
+
         </div>
 
 
-        <!-- select de los modelos -->
-        <div class="form-group">
-          <label for="select_model_id">model</label>
-          <select class="form-control" id="select_model_id" name="modelId">
-          </select>
-        </div>
-
-        <input type="submit" class="btn btn-primary" value="Valorar">
 
       </form>
 

@@ -18,16 +18,31 @@
   <div class="container mt-5">
     <h1>Resultados</h1>
     <div class="row">
-      <div class="col-6">
-        {% if predict %}
+
+      {% if models %}
+      {% for model in models %}
+      <div class="col-6 mt-5">
         <h5>Model:</h5>
         <p>{{model}}</p>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+
+      {% if predicts %}
+      {% for predict in predicts %}
+      <div class="col-6 mt-5">
+        <h5>Precio predict:</h5>
+        {% if predict > 0 %}
+        {% load humanize %}
+        <p>{{ predict|floatformat:0|intcomma}} €</p>
+        {% else %}
+        <p>Valor no disponible</p>
         {% endif %}
       </div>
-      {% if predict %}
-      <h5>Precio predict:</h5>
-      <p>{{ predict }}</p>
+      {% endfor %}
       {% endif %}
+
     </div>
   </div>
 
