@@ -39,6 +39,15 @@ def inicio(request):
     model_knn_regressor = load(knn_regressor)
     # ----------------------------------knn regresor-------------------------------------------------------
 
+        # ----------------------------------random forest regresor-------------------------------------------------------
+    random_forest_regressor = open(
+        os.path.dirname(os.path.realpath(__file__)) +
+        "/model_random_forest_regressor.pkl",
+        "rb",
+    )
+    model_random_forest_regressor = load(random_forest_regressor)
+    # ----------------------------------random forest regresor-------------------------------------------------------
+
     marcas_id = open(
         os.path.dirname(os.path.realpath(__file__)) + "/marcas_id.json",
         "rb",
@@ -72,7 +81,7 @@ def inicio(request):
         data_usuario = np.array(
             [[fuelTypeId, km, makeId, modelId, transmissionTypeId, year, cubicCapacity, doors, hp]])
 
-        modelos_training = [model_linear_regression, model_knn_regressor]
+        modelos_training = [model_linear_regression, model_knn_regressor,model_random_forest_regressor]
         predicts = []
 
         for modelo in modelos_training:
