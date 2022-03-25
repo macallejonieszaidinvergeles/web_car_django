@@ -21,12 +21,24 @@ from django.template import Library
 def inicio(request):
 
     # cargo el archivo con el modelo para entrenar los datos,y descargar la ultima version
+    # ----------------------------------linear regresor-------------------------------------------------------
     linear_regression = open(
         os.path.dirname(os.path.realpath(__file__)) +
         "/model_linear_regression.pkl",
         "rb",
     )
     model_linear_regression = load(linear_regression)
+    # ----------------------------------linear regresor-------------------------------------------------------
+
+
+    # ----------------------------------knn regresor-------------------------------------------------------
+    knn_regressor = open(
+        os.path.dirname(os.path.realpath(__file__)) +
+        "/model_knn_regressor.pkl",
+        "rb",
+    )
+    model_knn_regressor = load(knn_regressor)
+    # ----------------------------------knn regresor-------------------------------------------------------
 
     marcas_id = open(
         os.path.dirname(os.path.realpath(__file__)) + "/marcas_id.json",
@@ -52,16 +64,29 @@ def inicio(request):
         km = request.POST['km']
         makeId = request.POST['makeId']
         modelId = request.POST['modelId']
+        transmissionTypeId = request.POST['transmissionTypeId']
+        year = request.POST['year']
+        cubicCapacity = request.POST['cubicCapacity']
+        doors = request.POST['doors']
+        hp = request.POST['hp']
 
         data_usuario = np.array(
-            [[fuelTypeId, km, makeId, modelId, 2.0, 2015, 1329.0, 5.0, 99.0]])
+            [[fuelTypeId, km, makeId, modelId, transmissionTypeId, year, cubicCapacity, doors, hp]])
 
-        predict = model_linear_regression.predict(data_usuario)
+        
+        modelos_training = [model_linear_regression,model_knn_regressor]
+        predicts = []
+
+        for modelo in modelos_training:
+            predict = modelo.predict(data_usuario)
+            predict = float(predict)
+            predicts.append(predict)
+
 
         return render(
             request,
             "resultado.html",
-            {"predict": predict, "model": model_linear_regression},
+            {"predicts": predicts, "models": modelos_training},
         )
 
     # print("data json",data)
