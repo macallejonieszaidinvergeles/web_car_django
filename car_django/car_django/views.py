@@ -30,7 +30,6 @@ def inicio(request):
     model_linear_regression = load(linear_regression)
     # ----------------------------------linear regresor-------------------------------------------------------
 
-
     # ----------------------------------knn regresor-------------------------------------------------------
     knn_regressor = open(
         os.path.dirname(os.path.realpath(__file__)) +
@@ -73,8 +72,7 @@ def inicio(request):
         data_usuario = np.array(
             [[fuelTypeId, km, makeId, modelId, transmissionTypeId, year, cubicCapacity, doors, hp]])
 
-        
-        modelos_training = [model_linear_regression,model_knn_regressor]
+        modelos_training = [model_linear_regression, model_knn_regressor]
         predicts = []
 
         for modelo in modelos_training:
@@ -82,7 +80,7 @@ def inicio(request):
             predict = float(predict)
             predicts.append(predict)
 
-
+        # print("post:", request.POST)
         return render(
             request,
             "resultado.html",
