@@ -21,10 +21,18 @@ from django.template import Library
 def inicio(request):
 
     # cargo el archivo con el modelo para entrenar los datos,y descargar la ultima version
+    # ----------------------------------clf-------------------------------------------------------
+    clf = open(
+        os.path.dirname(os.path.realpath(__file__)) + "/modelos/model_clf.pkl",
+        "rb",
+    )
+    model_clf = load(clf)
+    # ----------------------------------clf-------------------------------------------------------
+
     # ----------------------------------linear regresor-------------------------------------------------------
     linear_regression = open(
-        os.path.dirname(os.path.realpath(__file__)) +
-        "/modelos/model_linear_regression.pkl",
+        os.path.dirname(os.path.realpath(__file__))
+        + "/modelos/model_linear_regression.pkl",
         "rb",
     )
     model_linear_regression = load(linear_regression)
@@ -32,17 +40,17 @@ def inicio(request):
 
     # ----------------------------------knn regresor-------------------------------------------------------
     knn_regressor = open(
-        os.path.dirname(os.path.realpath(__file__)) +
-        "/modelos/model_knn_regressor.pkl",
+        os.path.dirname(os.path.realpath(__file__))
+        + "/modelos/model_knn_regressor.pkl",
         "rb",
     )
     model_knn_regressor = load(knn_regressor)
     # ----------------------------------knn regresor-------------------------------------------------------
 
-        # ----------------------------------random forest regresor-------------------------------------------------------
+    # ----------------------------------random forest regresor-------------------------------------------------------
     random_forest_regressor = open(
-        os.path.dirname(os.path.realpath(__file__)) +
-        "/modelos/model_random_forest_regressor.pkl",
+        os.path.dirname(os.path.realpath(__file__))
+        + "/modelos/model_random_forest_regressor.pkl",
         "rb",
     )
     model_random_forest_regressor = load(random_forest_regressor)
@@ -68,20 +76,38 @@ def inicio(request):
 
     if request.POST:
         # fuelTypeId	km	makeId	modelId	transmissionTypeId	year	cubicCapacity	doors	hp
-        fuelTypeId = request.POST['fuelTypeId']
-        km = request.POST['km']
-        makeId = request.POST['makeId']
-        modelId = request.POST['modelId']
-        transmissionTypeId = request.POST['transmissionTypeId']
-        year = request.POST['year']
-        cubicCapacity = request.POST['cubicCapacity']
-        doors = request.POST['doors']
-        hp = request.POST['hp']
+        fuelTypeId = request.POST["fuelTypeId"]
+        km = request.POST["km"]
+        makeId = request.POST["makeId"]
+        modelId = request.POST["modelId"]
+        transmissionTypeId = request.POST["transmissionTypeId"]
+        year = request.POST["year"]
+        cubicCapacity = request.POST["cubicCapacity"]
+        doors = request.POST["doors"]
+        hp = request.POST["hp"]
 
         data_usuario = np.array(
-            [[fuelTypeId, km, makeId, modelId, transmissionTypeId, year, cubicCapacity, doors, hp]])
+            [
+                [
+                    fuelTypeId,
+                    km,
+                    makeId,
+                    modelId,
+                    transmissionTypeId,
+                    year,
+                    cubicCapacity,
+                    doors,
+                    hp,
+                ]
+            ]
+        )
 
-        modelos_training = [model_linear_regression, model_knn_regressor,model_random_forest_regressor]
+        modelos_training = [
+            model_linear_regression,
+            model_knn_regressor,
+            model_random_forest_regressor,
+            model_clf,
+        ]
         predicts = []
 
         for modelo in modelos_training:
@@ -96,11 +122,13 @@ def inicio(request):
         return render(
             request,
             "resultado.html",
-            {"predicts": predicts, "models": modelos_training,"res":res},
+            {"predicts": predicts, "models": modelos_training, "res": res},
         )
 
     # print("data json",data)
-    return render(request, "inicio.html", {"marcas_id": data_json, "marca_model_id": data_json2})
+    return render(
+        request, "inicio.html", {"marcas_id": data_json, "marca_model_id": data_json2}
+    )
 
 
 def resultado(request):
