@@ -34,10 +34,14 @@ def inicio(request):
     )
     model_clf = load(clf)
     # ----------------------------------clf-------------------------------------------------------
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6dd3cbda0c83501ae5e8f17605be890646e18982
     # ----------------------------------linear regresor-------------------------------------------------------
     linear_regression = open(
-        os.path.dirname(os.path.realpath(__file__)) +
-        "/modelos/model_linear_regression.pkl",
+        os.path.dirname(os.path.realpath(__file__))
+        + "/modelos/model_linear_regression.pkl",
         "rb",
     )
     model_linear_regression = load(linear_regression)
@@ -45,8 +49,8 @@ def inicio(request):
 
     # ----------------------------------knn regresor-------------------------------------------------------
     knn_regressor = open(
-        os.path.dirname(os.path.realpath(__file__)) +
-        "/modelos/model_knn_regressor.pkl",
+        os.path.dirname(os.path.realpath(__file__))
+        + "/modelos/model_knn_regressor.pkl",
         "rb",
     )
     model_knn_regressor = load(knn_regressor)
@@ -54,8 +58,8 @@ def inicio(request):
 
     # ----------------------------------random forest regresor-------------------------------------------------------
     random_forest_regressor = open(
-        os.path.dirname(os.path.realpath(__file__)) +
-        "/modelos/model_random_forest_regressor.pkl",
+        os.path.dirname(os.path.realpath(__file__))
+        + "/modelos/model_random_forest_regressor.pkl",
         "rb",
     )
     model_random_forest_regressor = load(random_forest_regressor)
@@ -113,21 +117,43 @@ def inicio(request):
 
     if request.POST:
         # fuelTypeId	km	makeId	modelId	transmissionTypeId	year	cubicCapacity	doors	hp
-        fuelTypeId = request.POST['fuelTypeId']
-        km = request.POST['km']
-        makeId = request.POST['makeId']
-        modelId = request.POST['modelId']
-        transmissionTypeId = request.POST['transmissionTypeId']
-        year = request.POST['year']
-        cubicCapacity = request.POST['cubicCapacity']
-        doors = request.POST['doors']
-        hp = request.POST['hp']
+        fuelTypeId = request.POST["fuelTypeId"]
+        km = request.POST["km"]
+        makeId = request.POST["makeId"]
+        modelId = request.POST["modelId"]
+        transmissionTypeId = request.POST["transmissionTypeId"]
+        year = request.POST["year"]
+        cubicCapacity = request.POST["cubicCapacity"]
+        doors = request.POST["doors"]
+        hp = request.POST["hp"]
 
         data_usuario = np.array(
-            [[fuelTypeId, km, makeId, modelId, transmissionTypeId, year, cubicCapacity, doors, hp]])
+            [
+                [
+                    fuelTypeId,
+                    km,
+                    makeId,
+                    modelId,
+                    transmissionTypeId,
+                    year,
+                    cubicCapacity,
+                    doors,
+                    hp,
+                ]
+            ]
+        )
 
+<<<<<<< HEAD
         modelos_training = [model_linear_regression, model_knn_regressor,
                             model_random_forest_regressor,model_clf]
+=======
+        modelos_training = [
+            model_linear_regression,
+            model_knn_regressor,
+            model_random_forest_regressor,
+            model_clf,
+        ]
+>>>>>>> 6dd3cbda0c83501ae5e8f17605be890646e18982
         predicts = []
 
         for modelo in modelos_training:
@@ -149,7 +175,9 @@ def inicio(request):
         )
 
     # print("data json",data)
-    return render(request, "inicio.html", {"marcas_id": data_json, "marca_model_id": data_json2})
+    return render(
+        request, "inicio.html", {"marcas_id": data_json, "marca_model_id": data_json2}
+    )
 
 
 def resultado(request):
