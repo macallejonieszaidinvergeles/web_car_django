@@ -13,6 +13,12 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.safestring import mark_safe
 from django.template import Library
+import tensorflow as tf
+from tensorflow.python.keras.layers import Input, Dense
+from keras.models import load_model
+from tensorflow import keras
+from keras.models import model_from_json
+from keras.models import load_model
 
 
 # import pandas as pd
@@ -21,6 +27,13 @@ from django.template import Library
 def inicio(request):
 
     # cargo el archivo con el modelo para entrenar los datos,y descargar la ultima version
+    # ----------------------------------clf-------------------------------------------------------
+    clf = open(
+        os.path.dirname(os.path.realpath(__file__)) + "/modelos/model_clf.pkl",
+        "rb",
+    )
+    model_clf = load(clf)
+    # ----------------------------------clf-------------------------------------------------------
     # ----------------------------------linear regresor-------------------------------------------------------
     linear_regression = open(
         os.path.dirname(os.path.realpath(__file__)) +
@@ -39,7 +52,7 @@ def inicio(request):
     model_knn_regressor = load(knn_regressor)
     # ----------------------------------knn regresor-------------------------------------------------------
 
-        # ----------------------------------random forest regresor-------------------------------------------------------
+    # ----------------------------------random forest regresor-------------------------------------------------------
     random_forest_regressor = open(
         os.path.dirname(os.path.realpath(__file__)) +
         "/modelos/model_random_forest_regressor.pkl",
@@ -48,13 +61,45 @@ def inicio(request):
     model_random_forest_regressor = load(random_forest_regressor)
     # ----------------------------------random forest regresor-------------------------------------------------------
 
+    # ----------------------------------keras-------------------------------------------------------
+    keras = open(
+        os.path.dirname(os.path.realpath(__file__)) +
+        "/modelos/model.h5",
+        "r",
+    )
+
+    # print("keras",keras)
+    # model_keras = tf.keras.models.load_model(keras)
+
+    # json_file = open(
+    #     os.path.dirname(os.path.realpath(__file__)) + "/json/model_keras.json",
+    #     "r",
+    # )
+    # loaded_model_json = json_file.read()
+    # json_file.close()
+    # loaded_model = model_from_json(loaded_model_json)
+    # # load weights into new model
+    # loaded_model.load_weights(keras)
+    # print("Loaded model from disk")
+
+    with open(
+        os.path.dirname(os.path.realpath(__file__)) + "/json/model_keras.json",
+        "r",
+    ) as f:
+        model_keras = model_from_json(f.read())
+    # load model weights
+    model_kerasssss = model_keras.load_weights(os.path.dirname(os.path.realpath(__file__)) + "/modelos/model.h5","r")
+
+    # ----------------------------------keras-------------------------------------------------------
+
     marcas_id = open(
         os.path.dirname(os.path.realpath(__file__)) + "/json/marcas_id.json",
         "rb",
     )
 
     marca_model_id = open(
-        os.path.dirname(os.path.realpath(__file__)) + "/json/marca_model_id.json",
+        os.path.dirname(os.path.realpath(__file__)) +
+        "/json/marca_model_id.json",
         "rb",
     )
 
@@ -81,13 +126,17 @@ def inicio(request):
         data_usuario = np.array(
             [[fuelTypeId, km, makeId, modelId, transmissionTypeId, year, cubicCapacity, doors, hp]])
 
-        modelos_training = [model_linear_regression, model_knn_regressor,model_random_forest_regressor]
+        modelos_training = [model_linear_regression, model_knn_regressor,
+                            model_random_forest_regressor,model_clf]
         predicts = []
 
         for modelo in modelos_training:
             predict = modelo.predict(data_usuario)
             predict = float(predict)
             predicts.append(predict)
+
+        # predict_keras = model_kerasssss.predict(data_usuario)
+        # print(predict_keras)
 
         res = dict(zip(modelos_training, predicts))
 
@@ -96,7 +145,7 @@ def inicio(request):
         return render(
             request,
             "resultado.html",
-            {"predicts": predicts, "models": modelos_training,"res":res},
+            {"predicts": predicts, "models": modelos_training, "res": res},
         )
 
     # print("data json",data)
