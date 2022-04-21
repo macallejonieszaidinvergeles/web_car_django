@@ -19,6 +19,8 @@ from keras.models import load_model
 from tensorflow import keras
 from keras.models import model_from_json
 from keras.models import load_model
+import h5py
+
 
 
 # import pandas as pd
@@ -34,10 +36,6 @@ def inicio(request):
     )
     model_clf = load(clf)
     # ----------------------------------clf-------------------------------------------------------
-<<<<<<< HEAD
-=======
-
->>>>>>> 6dd3cbda0c83501ae5e8f17605be890646e18982
     # ----------------------------------linear regresor-------------------------------------------------------
     linear_regression = open(
         os.path.dirname(os.path.realpath(__file__))
@@ -66,33 +64,21 @@ def inicio(request):
     # ----------------------------------random forest regresor-------------------------------------------------------
 
     # ----------------------------------keras-------------------------------------------------------
-    keras = open(
-        os.path.dirname(os.path.realpath(__file__)) +
-        "/modelos/model.h5",
-        "r",
-    )
-
-    # print("keras",keras)
-    # model_keras = tf.keras.models.load_model(keras)
-
-    # json_file = open(
-    #     os.path.dirname(os.path.realpath(__file__)) + "/json/model_keras.json",
+    # keras = open(
+    #     os.path.dirname(os.path.realpath(__file__)) +
+    #     "/modelos/model.h5",
     #     "r",
     # )
-    # loaded_model_json = json_file.read()
-    # json_file.close()
-    # loaded_model = model_from_json(loaded_model_json)
-    # # load weights into new model
-    # loaded_model.load_weights(keras)
-    # print("Loaded model from disk")
 
-    with open(
-        os.path.dirname(os.path.realpath(__file__)) + "/json/model_keras.json",
-        "r",
-    ) as f:
-        model_keras = model_from_json(f.read())
-    # load model weights
-    model_kerasssss = model_keras.load_weights(os.path.dirname(os.path.realpath(__file__)) + "/modelos/model.h5","r")
+    # with open(
+    #     os.path.dirname(os.path.realpath(__file__)) + "/json/model_keras.json",
+    #     "r",
+    # ) as f:
+    #     model_keras = model_from_json(f.read())
+    # # load model weights
+    # model_kerasssss = model_keras.load_weights(os.path.dirname(os.path.realpath(__file__)) + "/modelos/model.h5","r")
+
+    # model_keras = keras.models.load_model("./my_model_definitivo_keras.h5")
 
     # ----------------------------------keras-------------------------------------------------------
 
@@ -143,17 +129,8 @@ def inicio(request):
             ]
         )
 
-<<<<<<< HEAD
         modelos_training = [model_linear_regression, model_knn_regressor,
                             model_random_forest_regressor,model_clf]
-=======
-        modelos_training = [
-            model_linear_regression,
-            model_knn_regressor,
-            model_random_forest_regressor,
-            model_clf,
-        ]
->>>>>>> 6dd3cbda0c83501ae5e8f17605be890646e18982
         predicts = []
 
         for modelo in modelos_training:
@@ -161,7 +138,7 @@ def inicio(request):
             predict = float(predict)
             predicts.append(predict)
 
-        # predict_keras = model_kerasssss.predict(data_usuario)
+        # predict_keras = model_keras.predict(data_usuario)
         # print(predict_keras)
 
         res = dict(zip(modelos_training, predicts))
